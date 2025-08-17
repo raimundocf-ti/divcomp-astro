@@ -1,0 +1,64 @@
+---
+const cidade = "Divinésia";
+const estado = "MG";
+const whatsapp = "553298408646";
+---
+<section id="inicio" class="relative w-full bg-gradient-to-tr from-green-50 via-white to-green-100 py-16 md:py-28 scroll-mt-24">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10 px-6 text-center md:text-left">
+        <div class="flex-1 flex flex-col gap-6">
+      <span class="block text-green-700 font-semibold text-lg">
+        Profissional com <b>mais de 20 anos de experiência</b> em TI e tecnologia da informação
+      </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight">
+                Experiência, confiança e agilidade para resolver seu problema!
+            </h1>
+            <p class="text-lg md:text-xl text-gray-700">
+                Atuo há mais de duas décadas como especialista em manutenção de computadores, redes e soluções tecnológicas.<br />
+                Atendo residências, empresas e também compartilho conhecimento oferecendo cursos e treinamentos na área de TI.
+            </p>
+            <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-2">
+        <span class="inline-flex items-center gap-1 bg-green-100 px-3 py-1 rounded-full text-green-800 font-medium text-sm">
+          <span class="icon-[mdi--map-marker] w-5 h-5"></span> {cidade}, {estado}
+        </span>
+                <span class="inline-flex items-center gap-1 bg-green-50 px-3 py-1 rounded-full text-green-600 font-medium text-sm">
+          <span class="icon-[mdi--whatsapp] w-5 h-5"></span> WhatsApp Direto
+        </span>
+                <span class="inline-flex items-center gap-1 bg-green-200 px-3 py-1 rounded-full text-green-900 font-medium text-sm">
+          <span class="icon-[mdi--shield-check] w-5 h-5"></span> 100% Confiável
+        </span>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-7">
+                <a href="#servicos" class="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg shadow-md transition text-lg w-full sm:w-auto">
+                    <span class="icon-[mdi--tools] w-6 h-6"></span>
+                    Ver Serviços
+                </a>
+                <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center gap-2 bg-white hover:bg-green-50 text-green-700 border border-green-600 font-bold px-6 py-3 rounded-lg shadow-md transition text-lg w-full sm:w-auto">
+                    <span class="icon-[mdi--whatsapp] w-6 h-6"></span>
+                    WhatsApp
+                </a>
+            </div>
+        </div>
+        {/* Grid institucional (só desktop) */}
+        <div class="hidden md:flex flex-1 flex-col items-center justify-center mt-0">
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-white shadow rounded-xl flex flex-col items-center justify-center p-6 border border-green-100 hover:shadow-lg transition">
+                    <span class="icon-[mdi--monitor] w-12 h-12 text-green-600 mb-2"></span>
+                    <span class="text-sm font-medium text-gray-800 text-center">Computadores</span>
+                </div>
+                <div class="bg-white shadow rounded-xl flex flex-col items-center justify-center p-6 border border-green-100 hover:shadow-lg transition">
+                    <span class="icon-[mdi--server] w-12 h-12 text-green-700 mb-2"></span>
+                    <span class="text-sm font-medium text-gray-800 text-center">Servidores</span>
+                </div>
+                <div class="bg-white shadow rounded-xl flex flex-col items-center justify-center p-6 border border-green-100 hover:shadow-lg transition">
+                    <span class="icon-[mdi--wifi] w-12 h-12 text-green-500 mb-2"></span>
+                    <span class="text-sm font-medium text-gray-800 text-center">Redes & Wi-Fi</span>
+                </div>
+                <div class="bg-white shadow rounded-xl flex flex-col items-center justify-center p-6 border border-green-100 hover:shadow-lg transition">
+                    <span class="icon-[mdi--cloud-upload] w-12 h-12 text-green-400 mb-2"></span>
+                    <span class="text-sm font-medium text-gray-800 text-center">Backup & Dados</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

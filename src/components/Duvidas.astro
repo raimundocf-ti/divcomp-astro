@@ -1,0 +1,31 @@
+---
+const faqs = [
+    {
+        pergunta: "Como funciona o atendimento remoto?",
+        resposta: "Após contato, nossa equipe agenda um horário para conectar de forma segura ao seu equipamento e resolver o problema sem que você precise sair de casa."
+    },
+    {
+        pergunta: "Atendem apenas empresas?",
+        resposta: "Não! Atendemos empresas e residências, com a mesma qualidade e agilidade."
+    },
+    {
+        pergunta: "É seguro entregar meu computador?",
+        resposta: "Sim. Trabalhamos com sigilo total e respeito aos seus dados e privacidade."
+    },
+    {
+        pergunta: "Qual o horário de atendimento?",
+        resposta: "De segunda a sábado, das 8h às 18h."
+    }
+];
+---
+<section id="duvidas" class="max-w-3xl mx-auto px-6 py-14 md:py-20 scroll-mt-24">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-green-700 mb-8">Dúvidas Frequentes</h2>
+    <div class="space-y-6">
+        {faqs.map(faq => (
+                <details class="bg-white rounded-lg shadow-md p-5">
+                    <summary class="font-semibold cursor-pointer text-green-700">{faq.pergunta}</summary>
+                    <p class="mt-3 text-gray-700">{faq.resposta}</p>
+                </details>
+        ))}
+    </div>
+</section>

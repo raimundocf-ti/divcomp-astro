@@ -1,0 +1,106 @@
+---
+const experiencia = [
+    {
+        ano: "2002",
+        titulo: "Primeiros passos em TI",
+        desc: "Meu início como técnico de informática, movido pela curiosidade e o desejo de ajudar as pessoas a descomplicar o mundo digital."
+    },
+    {
+        ano: "2008",
+        titulo: "Expansão profissional",
+        desc: "Passei a atender empresas e órgãos públicos, implantando redes e soluções completas em TI com foco em segurança e eficiência."
+    },
+    {
+        ano: "2015",
+        titulo: "Educação e formação de novos profissionais",
+        desc: "Comecei a ministrar cursos e palestras, formando dezenas de novos talentos em Divinésia e região, unindo teoria e prática."
+    },
+    {
+        ano: "2024",
+        titulo: "DivComp & Engajamento Social",
+        desc: "Com mais de 20 anos de experiência, consolido a DivComp, unindo atendimento humanizado, consultoria e responsabilidade social."
+    }
+];
+
+const valores = [
+    { icone: "mdi--handshake-outline", titulo: "Ética & Respeito", desc: "Transparência total e respeito à individualidade de cada cliente." },
+    { icone: "mdi--account-group", titulo: "Comprometimento", desc: "Seu problema é meu desafio — só paro quando resolvo!" },
+    { icone: "mdi--school-outline", titulo: "Educação", desc: "Acredito que tecnologia também se aprende e se compartilha." },
+    { icone: "mdi--heart-outline", titulo: "Empatia", desc: "Atendimento próximo, paciente, sem 'tecnês' e sem enrolação." }
+];
+
+const curiosidades = [
+    "Sou presidente voluntário do Conselho dos Direitos da Criança e do Adolescente de Divinésia.",
+    "Apaixonado por ensinar: já formei dezenas de pessoas para o mercado de TI.",
+    "Adoro desafios: quanto mais complexo o problema, mais motivado eu fico!",
+    "Acredito que todo mundo pode aprender, basta querer e ter orientação certa.",
+    "Gosto de ouvir histórias e ajudar minha comunidade — tecnologia, para mim, é ferramenta de inclusão."
+];
+---
+
+<section class="w-full bg-gradient-to-tr from-green-50 via-white to-green-100 py-14 md:py-24">
+    <div class="max-w-4xl mx-auto px-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4 text-center">
+            Minha História & Propósito em Tecnologia
+        </h1>
+        <p class="text-lg md:text-xl text-gray-700 text-center mb-8">
+            Olá, sou <b>Raimundo Coelho</b>, apaixonado por tecnologia há mais de 20 anos.<br/>
+            Minha missão é unir conhecimento técnico, ética e empatia para transformar vidas em Divinésia e região.<br/>
+            <span class="text-green-700 font-semibold">Tecnologia, para mim, é ponte para dignidade e inclusão.</span>
+        </p>
+
+        <!-- Timeline de Experiência -->
+        <div class="mt-8 mb-12">
+            <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Linha do Tempo Profissional</h2>
+            <ol class="relative border-l-2 border-green-400 ml-0">
+                {experiencia.map(item => (
+                        <li class="mb-10 ml-20 relative"> {/* ou ml-24 para garantir espaço */}
+                            <span class="absolute -left-16 flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-green-500 to-green-700 rounded-full ring-8 ring-green-100 text-white font-bold text-base md:text-lg shadow-lg border-2 border-white">
+        {item.ano}
+      </span>
+                            <h3 class="text-lg font-semibold text-green-800">{item.titulo}</h3>
+                            <p class="text-gray-700">{item.desc}</p>
+                        </li>
+                ))}
+            </ol>
+
+        </div>
+
+        <!-- Valores e Diferenciais -->
+        <div class="my-14">
+            <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Valores & Diferenciais</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {valores.map(val => (
+                        <div class="bg-white/90 rounded-xl shadow p-7 flex flex-col items-center text-center hover:shadow-lg transition">
+                            <span class={`icon-[${val.icone}] w-10 h-10 text-green-600 mb-3`}></span>
+                            <h4 class="text-lg font-bold text-green-700 mb-1">{val.titulo}</h4>
+                            <p class="text-gray-700">{val.desc}</p>
+                        </div>
+                ))}
+            </div>
+        </div>
+
+        <!-- Curiosidades sobre mim -->
+        <div class="mt-12 mb-10">
+            <h2 class="text-2xl font-bold text-green-700 mb-4 text-center">Curiosidades & Causas</h2>
+            <div class="bg-green-50 border-l-4 border-green-400 rounded-xl px-7 py-7 shadow flex flex-col gap-3">
+                <ul class="list-disc ml-5 text-gray-700 space-y-2">
+                    {curiosidades.map(c => (
+                            <li><span class="text-green-700 font-semibold">•</span> {c}</li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-14">
+            <h3 class="text-xl md:text-2xl font-semibold text-green-700 mb-3">O futuro é colaborativo</h3>
+            <p class="text-lg text-gray-700 mb-3">
+                Quero levar conhecimento e atendimento de qualidade para mais pessoas,<br />
+                formando não só clientes, mas parceiros e multiplicadores de tecnologia.
+            </p>
+            <a href="/contato" class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-lg shadow-lg text-lg transition">
+                Fale comigo agora mesmo
+            </a>
+        </div>
+    </div>
+</section>
