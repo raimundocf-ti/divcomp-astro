@@ -1,50 +1,56 @@
-export const POST = async ({ request, context }) => {
-    const formData = await request.formData();
-    const nome = formData.get('nome');
-    const email = formData.get('email');
-    const mensagem = formData.get('mensagem');
+import FormData from "form-data";
+import Mailgun from "mailgun.js";
 
-    // Validação simples dos dados
+export const POST = async ({ request, context }) => {
+    // 1. Pega os dados enviados pelo formulário
+    const data = await request.formData();
+    const nome = data.get('nome');
+    const email = data.get('email');
+    const mensagem = data.get('mensagem');
+
+    // Validação simples
     if (!nome || !email || !mensagem) {
         return new Response(JSON.stringify({ message: "Todos os campos são obrigatórios." }), { status: 400 });
     }
 
-    // Pega as credenciais do ambiente da Cloudflare
+    // 2. Pega as credenciais seguras do ambiente da Cloudflare
     const MAILGUN_DOMAIN = context.env.MAILGUN_DOMAIN;
     const MAILGUN_API_KEY = context.env.MAILGUN_API_KEY;
 
     if (!MAILGUN_DOMAIN || !MAILGUN_API_KEY) {
-        return new Response(JSON.stringify({ message: "Credenciais do Mailgun não configuradas." }), { status: 500 });
+        console.error("Credenciais do Mailgun não encontradas no ambiente.");
+        return new Response(JSON.stringify({ message: "Erro de configuração no servidor." }), { status: 500 });
     }
 
-    // Prepara os dados para a API do Mailgun
-    const mailgunData = new URLSearchParams();
-    mailgunData.append('from', `Formulário DivComp <mailgun@${MAILGUN_DOMAIN}>`);
-    mailgunData.append('to', 'ramundo@divcomp.com'); // Seu e-mail de destino
-    mailgunData.append('subject', `Novo Contato de ${nome}`);
-    mailgunData.append('text', `Você recebeu uma nova mensagem de ${nome} (${email}):\n\n${mensagem}`);
+    // 3. Inicializa o cliente do Mailgun com as credenciais
+    const mailgun = new Mailgun(FormData);
+    const mg = mailgun.client({
+        username: "api",
+        key: MAILGUN_API_KEY,
+    });
 
-    // Envia a requisição para a API do Mailgun
+    // 4. Monta a mensagem a ser enviada
+    const messageData = {
+        from: `Formulário DivComp <contato@${MAILGUN_DOMAIN}>`,
+        to: "ramundo@divcomp.com", // Seu e-mail de destino
+        subject: `Novo Contato do Site: ${nome}`,
+        html: `
+      <h1>Nova mensagem do site DivComp</h1>
+      <p><strong>Nome:</strong> ${nome}</p>
+      <p><strong>E-mail:</strong> ${email}</p>
+      <hr>
+      <p><strong>Mensagem:</strong></p>
+      <p>${mensagem.replace(/\n/g, '<br>')}</p>
+    `,
+    };
+
+    // 5. Envia o e-mail e retorna a resposta
     try {
-        const response = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
-            method: 'POST',
-            headers: {
-                // A chave de API é codificada em Base64 para autenticação
-                'Authorization': `Basic ${btoa(`api:${MAILGUN_API_KEY}`)}`,
-            },
-            body: mailgunData,
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Erro no Mailgun:', errorText);
-            return new Response(JSON.stringify({ message: `Ocorreu um erro ao enviar o e-mail.` }), { status: 500 });
-        }
-
-        return new Response(JSON.stringify({ message: "Mensagem enviada com sucesso!" }), { status: 200 });
-
+        const result = await mg.messages.create(MAILGUN_DOMAIN, messageData);
+        console.log('E-mail enviado com sucesso:', result);
+        return new Response(JSON.stringify({ message: "Mensagem enviada com sucesso! Obrigado pelo contato." }), { status: 200 });
     } catch (error) {
-        console.error('Erro de rede:', error);
-        return new Response(JSON.stringify({ message: "Erro de conexão ao enviar o e-mail." }), { status: 500 });
+        console.error('Erro ao enviar o e-mail:', error);
+        return new Response(JSON.stringify({ message: "Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde." }), { status: 500 });
     }
 };
