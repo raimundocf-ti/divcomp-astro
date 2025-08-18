@@ -242,65 +242,22 @@ const avaliacoes = [
         </div>
     </section>
 
-    {/* Seção Contato (sem alterações) */}
     <section id="contato" class="w-full py-16 md:py-24 bg-white">
-        <div
-                x-data="{
-            formData: { nome: '', email: '', mensagem: '' },
-            submitting: false,
-            responseMessage: '',
-            isError: false,
-            async submitForm() {
-                this.submitting = true;
-                this.responseMessage = '';
-
-                const response = await fetch('/api/send-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.formData)
-                });
-
-                const result = await response.json();
-                this.responseMessage = result.message;
-
-                if (response.ok) {
-                    this.isError = false;
-                    this.formData = { nome: '', email: '', mensagem: '' }; // Limpa o formulário
-                } else {
-                    this.isError = true;
-                }
-
-                this.submitting = false;
-            }
-        }"
-                class="max-w-3xl mx-auto px-6 flex flex-col gap-8 items-center"
-        >
+        <div class="max-w-3xl mx-auto px-6 flex flex-col gap-8 items-center">
             <h2 class="text-center text-base/7 font-semibold text-green-600">Fale Conosco</h2>
             <p class="mx-auto mt-2 max-w-2xl text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
                 Pronto para começar?
             </p>
 
-            <form
-                    @submit.prevent="submitForm"
-                    class="w-full flex flex-col gap-4 mt-6 max-w-xl mx-auto"
-            >
-                <input x-model="formData.nome" required type="text" name="nome" placeholder="Seu nome" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
-                <input x-model="formData.email" required type="email" name="email" placeholder="Seu e-mail" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
-                <textarea x-model="formData.mensagem" required name="mensagem" rows="4" placeholder="Como podemos ajudar?" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"></textarea>
+            <form action="https://formsubmit.co/ramundo@divcomp.com" method="POST" class="w-full flex flex-col gap-4 mt-6 max-w-xl mx-auto">
+                <input required type="text" name="nome" placeholder="Seu nome" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
+                <input required type="email" name="email" placeholder="Seu e-mail" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
+                <textarea required name="mensagem" rows="4" placeholder="Como podemos ajudar?" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"></textarea>
 
-                <div x-show="responseMessage"
-                     x-transition
-                     :class="{ 'bg-green-100 text-green-800': !isError, 'bg-red-100 text-red-800': isError }"
-                     class="p-4 rounded-lg text-center font-medium"
-                     x-text="responseMessage">
-                </div>
+                <input type="hidden" name="_subject" value="Novo Contato do Site DivComp!">
+                <input type="hidden" name="_captcha" value="false">
 
-                <button type="submit" :disabled="submitting" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition text-lg disabled:opacity-70 disabled:cursor-not-allowed">
-                    <span x-show="!submitting">Enviar Mensagem</span>
-                    <span x-show="submitting">Enviando...</span>
-                </button>
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition text-lg">Enviar Mensagem</button>
             </form>
 
             <div class="flex flex-col gap-2 items-center mt-6">
