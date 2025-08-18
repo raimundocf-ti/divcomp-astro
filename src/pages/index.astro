@@ -256,7 +256,10 @@ const avaliacoes = [
 
                 const response = await fetch('/api/send-email', {
                     method: 'POST',
-                    body: new FormData(this.$refs.form)
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.formData)
                 });
 
                 const result = await response.json();
@@ -264,7 +267,7 @@ const avaliacoes = [
 
                 if (response.ok) {
                     this.isError = false;
-                    this.$refs.form.reset();
+                    this.formData = { nome: '', email: '', mensagem: '' }; // Limpa o formulário
                 } else {
                     this.isError = true;
                 }
@@ -280,17 +283,17 @@ const avaliacoes = [
             </p>
 
             <form
-                    x-ref="form"
                     @submit.prevent="submitForm"
                     class="w-full flex flex-col gap-4 mt-6 max-w-xl mx-auto"
             >
-                <input required type="text" name="nome" placeholder="Seu nome" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
-                <input required type="email" name="email" placeholder="Seu e-mail" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
-                <textarea required name="mensagem" rows="4" placeholder="Como podemos ajudar?" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"></textarea>
+                <input x-model="formData.nome" required type="text" name="nome" placeholder="Seu nome" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
+                <input x-model="formData.email" required type="email" name="email" placeholder="Seu e-mail" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
+                <textarea x-model="formData.mensagem" required name="mensagem" rows="4" placeholder="Como podemos ajudar?" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"></textarea>
 
                 <div x-show="responseMessage"
+                     x-transition
                      :class="{ 'bg-green-100 text-green-800': !isError, 'bg-red-100 text-red-800': isError }"
-                     class="p-4 rounded-lg text-center"
+                     class="p-4 rounded-lg text-center font-medium"
                      x-text="responseMessage">
                 </div>
 
