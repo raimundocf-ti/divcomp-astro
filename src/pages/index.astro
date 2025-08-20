@@ -243,72 +243,33 @@ const avaliacoes = [
         </div>
     </section>
 
-    <section id="contato" class="w-full py-16 md:py-24 bg-white">
-        <div
-                x-data="{
-            formData: { nome: '', email: '', mensagem: '' },
-            submitting: false,
-            responseMessage: '',
-            isError: false,
-            async submitForm() {
-                this.submitting = true;
-                this.responseMessage = '';
 
-                try {
-                    const response = await fetch('/api/send-email', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(this.formData)
-                    });
-
-                    const result = await response.json();
-                    this.responseMessage = result.message;
-
-                    if (response.ok) {
-                        this.isError = false;
-                        this.formData = { nome: '', email: '', mensagem: '' };
-                    } else {
-                        this.isError = true;
-                    }
-                } catch (error) {
-                    this.isError = true;
-                    this.responseMessage = 'Não foi possível conectar ao servidor. Verifique sua conexão.';
-                } finally {
-                    this.submitting = false;
-                }
-            }
-        }"
-                class="max-w-3xl mx-auto px-6 flex flex-col gap-8 items-center"
-        >
-            <h2 class="text-center text-base/7 font-semibold text-green-600">Fale Conosco</h2>
-            <p class="mx-auto mt-2 max-w-2xl text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
-                Pronto para começar?
+    <!-- NOVA SEÇÃO DE CONTATO - FOCO NO WHATSAPP -->
+    <section id="contato" class="w-full py-16 md:py-24 bg-gradient-to-tr from-green-600 to-emerald-800">
+        <div class="max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
+            <span class="icon-[mdi--whatsapp] text-7xl text-white mb-4"></span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white text-balance tracking-tight">
+                Precisa de ajuda agora?
+            </h2>
+            <p class="mt-4 text-lg md:text-xl text-green-100 max-w-xl">
+                Sem formulários, sem espera. Clique no botão abaixo para falar diretamente comigo no WhatsApp e resolver seu problema de forma rápida.
             </p>
-
-            <form @submit.prevent="submitForm" class="w-full flex flex-col gap-4 mt-6 max-w-xl mx-auto">
-                <input x-model="formData.nome" required type="text" name="nome" placeholder="Seu nome" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
-                <input x-model="formData.email" required type="email" name="email" placeholder="Seu e-mail" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"/>
-                <textarea x-model="formData.mensagem" required name="mensagem" rows="4" placeholder="Como podemos ajudar?" class="w-full border rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500"></textarea>
-
-                <div x-show="responseMessage" x-transition :class="{ 'bg-green-100 text-green-800': !isError, 'bg-red-100 text-red-800': isError }" class="p-4 rounded-lg text-center font-medium" x-text="responseMessage"></div>
-
-                <button type="submit" :disabled="submitting" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition text-lg disabled:opacity-70 disabled:cursor-not-allowed">
-                    <span x-show="!submitting">Enviar Mensagem</span>
-                    <span x-show="submitting">Enviando...</span>
-                </button>
-            </form>
-
-            <div class="flex flex-col gap-2 items-center mt-6">
-                <span class="font-semibold text-gray-700">Ou se preferir, clique direto:</span>
-                <div class="flex gap-3 mt-1 flex-wrap justify-center">
-                    <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-green-100 text-green-800 font-semibold hover:bg-green-200 transition"><span class="icon-[mdi--whatsapp] w-5 h-5"></span> WhatsApp</a>
-                    <a href={`mailto:${emailContato}`} class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue-100 text-blue-800 font-semibold hover:bg-blue-200 transition"><span class="icon-[mdi--email] w-5 h-5"></span> E-mail</a>
-                    <a href={instagramLink} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-pink-100 text-pink-700 font-semibold hover:bg-pink-200 transition"><span class="icon-[mdi--instagram] w-5 h-5"></span> Instagram</a>
-                    <a href={facebookLink} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue-50 text-blue-800 font-semibold hover:bg-blue-100 transition"><span class="icon-[mdi--facebook] w-5 h-5"></span> Facebook</a>
-                </div>
-            </div>
+            <a
+                    href={`https://wa.me/${whatsapp}?text=Olá! Vi seu site e gostaria de um orçamento.`}
+                    target="_blank"
+                    rel="noopener"
+                    class="mt-8 inline-flex items-center gap-3 bg-white hover:bg-green-50 text-green-700 font-bold px-8 py-4 rounded-full shadow-lg transition-transform hover:scale-105"
+            >
+                <span class="icon-[mdi--whatsapp] w-8 h-8"></span>
+                <span class="text-xl">{telefone}</span>
+            </a>
+            <!--<p class="mt-6 text-sm text-green-200">-->
+            <!--    Atendimento de Segunda a Sábado, das 8h às 18h.-->
+            <!--</p>-->
         </div>
     </section>
+
+
 </main>
 <Footer/>
 
