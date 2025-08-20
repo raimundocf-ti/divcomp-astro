@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import FormData from "form-data";
 import Mailgun from "mailgun.js";
 
