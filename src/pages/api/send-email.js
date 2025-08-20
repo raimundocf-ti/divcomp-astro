@@ -1,10 +1,8 @@
+// Garante que o Astro não tente pré-renderizar esta API durante o build.
 export const prerender = false;
 
 import FormData from "form-data";
 import Mailgun from "mailgun.js";
-
-// Impede que o Astro tente pré-renderizar esta API durante o build
-export const prerender = false;
 
 export const POST = async ({ request, context }) => {
     try {
@@ -18,12 +16,10 @@ export const POST = async ({ request, context }) => {
             });
         }
 
-        // Pega as credenciais do ambiente da Cloudflare
         const { MAILGUN_DOMAIN, MAILGUN_API_KEY } = context.env;
 
-        // Verificação crucial: garante que as variáveis foram carregadas
         if (!MAILGUN_DOMAIN || !MAILGUN_API_KEY) {
-            console.error("ERRO FATAL: As variáveis de ambiente MAILGUN_DOMAIN ou MAILGUN_API_KEY não foram encontradas!");
+            console.error("ERRO: As credenciais MAILGUN_DOMAIN ou MAILGUN_API_KEY não foram encontradas nas variáveis de ambiente da Cloudflare.");
             return new Response(JSON.stringify({ message: "Erro de configuração no servidor." }), {
                 status: 500,
                 headers: { "Content-Type": "application/json" },
@@ -35,7 +31,7 @@ export const POST = async ({ request, context }) => {
 
         const messageData = {
             from: `Formulário DivComp <contato@${MAILGUN_DOMAIN}>`,
-            to: "ramundo@divcomp.com.br", // O seu e-mail de destino
+            to: "ramundo@divcomp.com.br", // Seu e-mail de destino
             subject: `Novo Contato do Site: ${nome}`,
             html: `
         <h1>Nova mensagem do site DivComp</h1>
@@ -47,8 +43,7 @@ export const POST = async ({ request, context }) => {
       `,
         };
 
-        const result = await mg.messages.create(MAILGUN_DOMAIN, messageData);
-        console.log("E-mail enviado com sucesso via Mailgun:", result);
+        await mg.messages.create(MAILGUN_DOMAIN, messageData);
 
         return new Response(JSON.stringify({ message: "Mensagem enviada com sucesso! Obrigado pelo contato." }), {
             status: 200,
@@ -56,8 +51,7 @@ export const POST = async ({ request, context }) => {
         });
 
     } catch (err) {
-        // Regista o erro detalhado nos logs da Cloudflare
-        console.error("Erro detalhado ao processar o pedido:", err);
+        console.error("Erro no servidor ao tentar enviar e-mail:", err);
         return new Response(JSON.stringify({ message: "Ocorreu um erro ao processar sua solicitação." }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
