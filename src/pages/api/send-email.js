@@ -16,10 +16,10 @@ export const POST = async ({ request, context }) => {
             });
         }
 
-        const { MAILGUN_DOMAIN, MAILGUN_API_KEY } = context.env;
+        const { NAME_MAILGUN_DOMAIN, NANME_MAILGUN_API_KEY } = context.env;
 
-        if (!MAILGUN_DOMAIN || !MAILGUN_API_KEY) {
-            console.error("ERRO: As credenciais MAILGUN_DOMAIN ou MAILGUN_API_KEY não foram encontradas nas variáveis de ambiente da Cloudflare.");
+        if (!NAME_MAILGUN_DOMAIN || !NANME_MAILGUN_API_KEY) {
+            console.error("ERRO: As credenciais NAME_MAILGUN_DOMAIN ou NANME_MAILGUN_API_KEY não foram encontradas nas variáveis de ambiente da Cloudflare.");
             return new Response(JSON.stringify({ message: "Erro de configuração no servidor." }), {
                 status: 500,
                 headers: { "Content-Type": "application/json" },
@@ -27,10 +27,10 @@ export const POST = async ({ request, context }) => {
         }
 
         const mailgun = new Mailgun(FormData);
-        const mg = mailgun.client({ username: "api", key: MAILGUN_API_KEY });
+        const mg = mailgun.client({ username: "api", key: NANME_MAILGUN_API_KEY });
 
         const messageData = {
-            from: `Formulário DivComp <contato@${MAILGUN_DOMAIN}>`,
+            from: `Formulário DivComp <contato@${NAME_MAILGUN_DOMAIN}>`,
             to: "ramundo@divcomp.com.br", // Seu e-mail de destino
             subject: `Novo Contato do Site: ${nome}`,
             html: `
@@ -43,7 +43,7 @@ export const POST = async ({ request, context }) => {
       `,
         };
 
-        await mg.messages.create(MAILGUN_DOMAIN, messageData);
+        await mg.messages.create(NAME_MAILGUN_DOMAIN, messageData);
 
         return new Response(JSON.stringify({ message: "Mensagem enviada com sucesso! Obrigado pelo contato." }), {
             status: 200,
